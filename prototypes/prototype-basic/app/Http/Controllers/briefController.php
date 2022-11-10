@@ -66,8 +66,9 @@ class briefController extends Controller
      */
     public function edit($id)
     {
-        $brief= Brief::find($id);
-        $task =Brief::find($id)->tasks;
+        $brief = Brief::find($id);
+        $task = Brief::find($id)->tasks;
+
         return view('brief.edit',compact("brief","id","task"));
     }
 
@@ -97,6 +98,8 @@ class briefController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $brief =Brief::find($id)->delete();
+        return redirect('brief');
     }
+
 }

@@ -12,7 +12,7 @@
 
 
 <form action="{{route('task.create')}}" method="get">
-    <input name="briefId" value="{{$brief->id}}" type="hidden">
+    <input name="briefs_id" value="{{$brief->id}}" type="hidden">
 
     <button>add task</button>
 </form>

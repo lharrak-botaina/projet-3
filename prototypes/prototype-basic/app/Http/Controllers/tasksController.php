@@ -37,11 +37,12 @@ class tasksController extends Controller
      */
     public function store(Request $request)
     {
+
         $task = new Task();
         $task->task_name =$request->taskName;
         $task->start_date =$request->startDate;
         $task->end_date =$request->endDate;
-        $task->briefs_id =$request->briefsId;
+        $task->briefs_id =$request->id_brief;
         // $task = Task::create([
         //     "task_name" => $request->taskName,
         //     "start_date"=>$request->startDate,
@@ -49,7 +50,9 @@ class tasksController extends Controller
         //     "briefs_id"=>$request->briefsId
 
         // ]);
-        // return redirect('brief/'.$request->briefsId.'/edit' );
+        //  dd($task);
+        // $task->save();
+        return redirect('brief/'.$request->id_brief.'/edit' );
 
     }
 
@@ -72,7 +75,9 @@ class tasksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::find($id);
+        $briefs_id = $task->briefs_id;
+        return view("task.edit",compact("task","briefs_id"));
     }
 
     /**
