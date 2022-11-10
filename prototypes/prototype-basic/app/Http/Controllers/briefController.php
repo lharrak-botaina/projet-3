@@ -43,8 +43,8 @@ class briefController extends Controller
         $brief->save();
         return redirect('brief');
 
-      
-        
+
+
     }
 
     /**
@@ -67,8 +67,8 @@ class briefController extends Controller
     public function edit($id)
     {
         $brief= Brief::find($id);
-        // $task =Brief::find($id)->Tasks;
-        return view('brief.edit',compact("brief"));
+        $task =Brief::find($id)->tasks;
+        return view('brief.edit',compact("brief","id","task"));
     }
 
     /**
@@ -85,7 +85,7 @@ class briefController extends Controller
         $brief->deliver_date=$request->deliver_date;
         $brief->recovery_date=$request->recovery_date;
         $brief->save();
-        return redirect('/edit');
+        return redirect('brief/'.$id.'/edit');
 
     }
 

@@ -16,6 +16,6 @@ class Brief extends Model
        'recovery_date'
     ];
     public function tasks(){
-        return $this->hasMany(Task::class,'brief_id');
+        return $this->hasMany(Task::class,'briefs_id');
     }
 }

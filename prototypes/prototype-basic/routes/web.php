@@ -18,3 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('brief',briefController::class);
+Route::resource('task',briefController::class);

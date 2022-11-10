@@ -11,9 +11,11 @@ class tasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $id=$request->briefs_id;
+        $task = Brief::find($id)->tasks;
+        return view('task.index',compact('task',"id"));
     }
 
     /**
@@ -21,9 +23,10 @@ class tasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $id = $request->briefs_id;
+        view('task.create',compact("id"));
     }
 
     /**
@@ -34,7 +37,20 @@ class tasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = new Task();
+        $task->task_name =$request->taskName;
+        $task->start_date =$request->startDate;
+        $task->end_date =$request->endDate;
+        $task->briefs_id =$request->briefsId;
+        // $task = Task::create([
+        //     "task_name" => $request->taskName,
+        //     "start_date"=>$request->startDate,
+        //     "end_date"=>$request->endDate,
+        //     "briefs_id"=>$request->briefsId
+
+        // ]);
+        // return redirect('brief/'.$request->briefsId.'/edit' );
+
     }
 
     /**

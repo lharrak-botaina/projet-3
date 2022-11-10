@@ -11,8 +11,8 @@
 </form>
 
 
-{{-- <form action="{{route('task.create')}}" method="get">
-    <input name="brief_id" value="{{$brief->id}}" type="hidden">
+<form action="{{route('task.create')}}" method="get">
+    <input name="briefId" value="{{$brief->id}}" type="hidden">
 
     <button>add task</button>
 </form>
@@ -24,7 +24,7 @@
             <th>id</th>
             <th> Nom de la tâche</th>
             <th>Début de la tâche</th>
-            <th>Fin_de la tâche</th>
+            <th>Fin de la tâche</th>
             <th>action</th>
 
         </tr>
@@ -33,13 +33,13 @@
         @foreach ($task as $item )
         <tr>
             <td>{{$item->id}} </td>
-            <td>{{$item->Nom_de_la_tâche}} </td>
-            <td>{{$item->Début_de_la_tâche}}</td>
-            <td>{{$item->Fin_de_la_tâche}}</td>
+            <td>{{$item->task_name}} </td>
+            {{-- <td>{{$item->Début_de_la_tâche}}</td>
+            <td>{{$item->Fin_de_la_tâche}}</td> --}}
             <td>
 
                 <a href="{{route('task.edit',$item->id)}}"><button>Edit</button></a>
-                
+
                 <form action="{{route('task.destroy',$item->id)}}" method="POST">
                     @method("DELETE")
                     <input type="hidden" value="{{$id}}" name="brief_id">
@@ -52,8 +52,7 @@
         @endforeach
     </tbody>
 
-</table> --}}
-
+</table>
 
 
 
