@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brief;
 use Illuminate\Http\Request;
 
-class briefController extends Controller
+class BriefController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class briefController extends Controller
     public function index()
     {
         $briefs = Brief::all();
-        return view('brief.index',['briefs'=>$briefs]);
+        return view('brief.index',compact('briefs'));
     }
 
     /**
@@ -28,27 +28,15 @@ class briefController extends Controller
         return view('brief.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        $brief = new Brief();
-        $brief->brief_name =$request->name;
-        $brief->deliver_date=$request->deliver_date;
-        $brief->recovery_date=$request->recovery_date;
-        $brief->save();
-        return redirect('brief');
         $brief =Brief::create([
-            'brief_name'=>$request->name,
-            'token'=>Str::random()
-        ])
-
-
-
+            'brief_name'=>$request->brief_name,
+            'delivery_date'=>$request->delivery_date,
+            'recuperation_date'=>$request->recuperation_date
+        ]);
+        return redirect()->route('brief.index');
     }
 
     /**
@@ -70,10 +58,9 @@ class briefController extends Controller
      */
     public function edit($id)
     {
-        $brief = Brief::find($id);
-        $task = Brief::find($id)->tasks;
-
-        return view('brief.edit',compact("brief","id","task"));
+        $brief= Brief::find($id);
+        $tasks = Brief::find($id)->tasks;
+        return view('brief.edit',compact('brief','tasks') );
     }
 
     /**
@@ -85,12 +72,13 @@ class briefController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $brief= Brief::find($id);
-        $brief->brief_name =$request->name;
-        $brief->deliver_date=$request->deliver_date;
-        $brief->recovery_date=$request->recovery_date;
-        $brief->save();
-        return redirect('brief/'.$id.'/edit');
+        $brief = Brief::where('id',$id)->update([
+            'brief_name'=>$request->brief_name,
+            'delivery_date'=>$request->delivery_date,
+            'recuperation_date'=>$request->recuperation_date
+        ]);
+        return redirect()->route('brief.index');
+        
 
     }
 
@@ -102,8 +90,7 @@ class briefController extends Controller
      */
     public function destroy($id)
     {
-        $brief =Brief::find($id)->delete();
-        return redirect('brief');
+        $brief=Brief::where('id',$id)->delete();
+        return redirect()->route('brief.index');
     }
-
 }

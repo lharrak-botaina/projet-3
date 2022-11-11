@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\briefController;
+use App\Http\Controllers\tasksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('brief',briefController::class);
-Route::resource('task',briefController::class);
+Route::resource('/brief/task',tasksController::class);
+Route::get('/brief/{token}/task',[tasksController::class,'create']);

@@ -6,18 +6,17 @@ use App\Models\Task;
 use App\Models\Brief;
 use Illuminate\Http\Request;
 
-class tasksController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $id=$request->briefs_id;
-        $task = Brief::find($id)->tasks;
-        return view('task.index',compact('task',"id"));
+        $tasks = Task::all();
+        return redirect()->route('brief.edit');
     }
 
     /**
@@ -25,10 +24,11 @@ class tasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create($id)
     {
-        $id = $request->briefs_id;
-        view('task.create',compact("id"));
+        // $id = $request->brief_id;
+        $brief = Brief::where('id', $id)->firstOrFail();
+        return view('task.create', ['brief' => $brief]);
     }
 
     /**
@@ -39,23 +39,18 @@ class tasksController extends Controller
      */
     public function store(Request $request)
     {
+        $task =Task::create([
+        
+        
+            'task_name'=>$request->task_name,
+            'start_date'=>$request->start_date,
+            'end_date'=>$request->end_date,
+            'description'=>$request->description,
+            'brief_id'=>$request->brief_id,
 
-        $task = new Task();
-        $task->task_name =$request->taskName;
-        $task->start_date =$request->startDate;
-        $task->end_date =$request->endDate;
-        $task->briefs_id =$request->id_brief;
-        // $task = Task::create([
-        //     "task_name" => $request->taskName,
-        //     "start_date"=>$request->startDate,
-        //     "end_date"=>$request->endDate,
-        //     "briefs_id"=>$request->briefsId
-
-        // ]);
-        //  dd($task);
-        // $task->save();
-        return redirect('brief/'.$request->id_brief.'/edit' );
-
+        ]);
+        $task->save();
+        return redirect()->route('brief.edit', $task->brief_id);
     }
 
     /**
@@ -77,9 +72,9 @@ class tasksController extends Controller
      */
     public function edit($id)
     {
-        $task = Task::find($id);
-        $briefs_id = $task->briefs_id;
-        return view("task.edit",compact("task","briefs_id"));
+        $task = Task::findOrFail($id);
+        // dd($task);
+        return view('task.edit', ['task' => $task]);
     }
 
     /**
@@ -91,7 +86,19 @@ class tasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task ->update([
+            'task_name'=>$request->task_name,
+            'start_date'=>$request->start_date,
+            'end_date'=>$request->end_date,
+            'description'=>$request->description,
+            'brief_id'=>$request->brief_id
+        ]);
+        $task->save();
+        return redirect()->route('brief.edit', $task->brief->brief_id);
+
+
+       
     }
 
     /**
@@ -102,6 +109,7 @@ class tasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task=Task::find($id)->delete();
+        return redirect()->route('task.edit');
     }
 }

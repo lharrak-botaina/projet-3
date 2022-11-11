@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('briefs', function (Blueprint $table) {
-            $table->id();
-            $table->string('brief_name')->nullable();
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
             $table->string('token');
-            $table->dateTime('deliver_date')->nullable();
-            $table->dateTime('recovery_date')->nullable();
-
-            $table->timestamps();
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('briefs');
+        Schema::dropIfExists('password_resets');
     }
 };

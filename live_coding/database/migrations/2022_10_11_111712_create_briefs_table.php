@@ -15,11 +15,9 @@ return new class extends Migration
     {
         Schema::create('briefs', function (Blueprint $table) {
             $table->id();
-            $table->string('brief_name')->nullable();
-            $table->string('token');
-            $table->dateTime('deliver_date')->nullable();
-            $table->dateTime('recovery_date')->nullable();
-
+            $table->string('brief_name');
+            $table->dateTime('delivery_date')->nullable();
+            $table->dateTime('recuperation_date')->nullable();
             $table->timestamps();
         });
     }
