@@ -40,8 +40,8 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $task =Task::create([
-        
-        
+
+
             'task_name'=>$request->task_name,
             'start_date'=>$request->start_date,
             'end_date'=>$request->end_date,
@@ -94,11 +94,13 @@ class TaskController extends Controller
             'description'=>$request->description,
             'brief_id'=>$request->brief_id
         ]);
-        $task->save();
-        return redirect()->route('brief.edit', $task->brief->brief_id);
+        // dd($task);
+        // $task->save();
+        return redirect()->route('brief.edit', $task->brief->id);
 
 
-       
+
+
     }
 
     /**
@@ -109,7 +111,9 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $task=Task::find($id)->delete();
-        return redirect()->route('task.edit');
+        $task=Task::find($id);
+        $task->delete();
+
+        return back();
     }
 }

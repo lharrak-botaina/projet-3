@@ -13,7 +13,7 @@
             <th>nom de tache</th>
             <th>date de debut</th>
             <th>date de fin</th>
-            
+
             <th>actions</th>
         </tr>
     </thead>
@@ -25,14 +25,14 @@
             <td>{{$value->end_date}}</td>
             <td>
                 <a href="{{route('task.edit', $value->id)}}">edit</a>
-                <form action="{{route('task.destroy', $value->id)}}" method="post">
+                <form action="{{route('task.destroy', $value->id)}}" method="POST">
                     @csrf
-                    @method('delete')
+                    @method('DELETE')
                     <button type="submit">delete</button>
                 </form>
-            </td> 
+            </td>
         </tr>
-            
+
         @endforeach
     </tbody>
 </table>
