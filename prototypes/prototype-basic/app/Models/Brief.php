@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Brief extends Model
 {
     use HasFactory;
-    protected $table ="briefs";
-    public $timestamps= false;
+    protected $table ='briefs';
     protected $fillable =[
         'brief_name',
-       'deliver_date',
-       'recovery_date'
+        'delivery_date',
+        'recuperation_date'
     ];
     public function tasks(){
-        return $this->hasMany(Task::class,'briefs_id');
+        return $this->hasMany(Task::class,'brief_id');
+
     }
 }

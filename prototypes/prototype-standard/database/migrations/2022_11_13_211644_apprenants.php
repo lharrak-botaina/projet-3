@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('apprenants', function (Blueprint $table) {
             $table->id();
-            $table->string('task_name')->nullable();
-            $table->dateTime('start_date')->nullable();
-            $table->dateTime('end_date')->nullable();
-            $table->bigInteger('briefs_id')->nullable();
-            $table->timestamps();
+            $table->string("nom")->nullable();
+            $table->string("prenom")->nullable();
+            $table->string("email")->nullable();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        //
     }
 };

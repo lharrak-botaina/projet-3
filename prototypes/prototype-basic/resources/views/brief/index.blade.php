@@ -1,44 +1,28 @@
-
-
-<a href="{{route("brief.create")}}"><button>add</button></a>
-
+<a href="{{route('brief.create')}}">+add brief</a>
 <table>
     <thead>
         <tr>
-            <th>name</th>
-            <th>livraison</th>
-            <th>recuperation</th>
-            <th>Tache</th>
+            <th>nom de brief</th>
+            <th>date de livraison</th>
+            <th>date de recuperation</th>
+            
             <th>actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($brief as $item )
+        @foreach ($briefs as $value)
         <tr>
-
-            <td>{{$item->brief_name}} </td>
-            <td>{{$item->deliver_date}}</td>
-            <td>{{$item->recovery_date}}</td>
+            <td>{{$value->brief_name}}</td>
             <td>
-                <a href="{{route('brief.edit',$item->id)}}"><button>Edit</button></a>
-                <a href="{{route('',$item->id)}}"><button>Edit</button></a>
-
-                </td>
-            <td>
-                <form action="{{route('brief.destroy',$item->id)}}" method="POST">
-                    @method("DELETE")
+                <a href="{{route('brief.edit', $value->id)}}">edit</a>
+                <form action="{{route('brief.destroy', $value->id)}}" method="post">
                     @csrf
-                    <button>delete</button>
+                    @method('delete')
+                    <button type="submit">delete</button>
                 </form>
             </td>
-
-
-
         </tr>
+            
         @endforeach
     </tbody>
-
 </table>
-
-
-
